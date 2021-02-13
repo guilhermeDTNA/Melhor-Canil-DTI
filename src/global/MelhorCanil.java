@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package global;
 
 import java.util.ArrayList;
@@ -63,20 +58,25 @@ public class MelhorCanil {
     /*Entrada do programa:*/
     //<data> <quantidade de cães pequenos> <quantidade cães grandes>
     //Exemplo: 03/08/2018 3 5
+    
     public static void main(String[] args) {
         // TODO code application logic here
         Scanner teclado = new Scanner(System.in);
-        String data, dia_semana;
+        String data, dia_semana, completo;
         int pequenos, grandes;
 
-        System.out.println("Digite a data do banho: dd/mm/yyyy");
-        data = teclado.next();
+        System.out.println("Digite a data do banho (dd/mm/yyyy), a quantidade de cães pequenos e a quantidade de cães grandes. \nExemplo: 03/08/2018 3 5\n");
+        completo = teclado.nextLine();
 
-        System.out.println("Digite a quantidade de cães pequenos:");
-        pequenos = teclado.nextInt();
+        //Separa todas as informações da resposta (data, qtd de cães pequenos e de grandes)
+        String partes[] = new String[3];
 
-        System.out.println("Digite a quantidade de cães grandes:");
-        grandes = teclado.nextInt();
+        partes = completo.split(" ");
+        
+        data = partes[0];
+        pequenos = Integer.parseInt(partes[1]);
+        grandes = Integer.parseInt(partes[2]);
+
 
         //Além de separar a data, vai pegar o dia da semana
         dia_semana = weekDay(data);
@@ -85,7 +85,7 @@ public class MelhorCanil {
         float rex = vaiRex(dia_semana, pequenos, grandes);
         float chow = chowChawgas(dia_semana, pequenos, grandes);
 
-        System.out.println("Melhor canil: "+comparar(meuCanino, rex, chow));
+        System.out.println("Melhor canil: " + comparar(meuCanino, rex, chow));
 
     }
 
@@ -97,9 +97,11 @@ public class MelhorCanil {
         return dataFinal;
     }
 
+    //Método que contabiliza o valor na Meu Canino Feliz
     public static float meuCaninoFeliz(String dia_semana, int nPequenos, int nGrandes) {
         float total = 0;
 
+        //Tem que calcular 20% do valor total do banho em fins de semana
         if (dia_semana.equalsIgnoreCase("Sábado") || dia_semana.equalsIgnoreCase("Domingo")) {
             total = ((20 * nPequenos) + (40 * nGrandes)) + ((20 * nPequenos) + (40 * nGrandes)) * 20 / 100;
         } else {
@@ -109,9 +111,11 @@ public class MelhorCanil {
         return total;
     }
 
+    //Método que contabiliza o valor na Vai Rex
     public static float vaiRex(String dia_semana, int nPequenos, int nGrandes) {
         float total = 0;
 
+        //Para fins de semana o valor é diferente
         if (dia_semana.equalsIgnoreCase("Sábado") || dia_semana.equalsIgnoreCase("Domingo")) {
             total = (20 * nPequenos) + (55 * nGrandes);
         } else {
@@ -121,6 +125,7 @@ public class MelhorCanil {
         return total;
     }
 
+    //Método que contabiliza o valor na ChowChagas
     public static float chowChawgas(String dia_semana, int nPequenos, int nGrandes) {
         float total = 0;
 
@@ -136,6 +141,7 @@ public class MelhorCanil {
 
         String melhor = "";
 
+        //Cria uma lista de valores para cada petshop
         List<Float> lista = new ArrayList<Float>();
 
         lista.add(meuCaninoFeliz);
@@ -144,6 +150,7 @@ public class MelhorCanil {
 
         float menorValor = lista.get(0);
 
+        //Atualiza o menor valor percorrendo a lista
         for (float valor : lista) {
             if (valor < menorValor) {
                 menorValor = valor;
@@ -167,16 +174,18 @@ public class MelhorCanil {
         }
 
         //System.out.println("Meu Canino Feliz: "+meuCaninoFeliz+" Vai Rex: "+vaiRex+" ChowChawgas: "+chowChawgas);
-        System.out.println("Valor total dos banhos: "+menorValor);
+        System.out.println("Valor total dos banhos: " + menorValor);
         return melhor;
     }
 
     public static String weekDay(String data) {
 
+        //Atribui a data aos atributos da classe 
         setDia(Integer.parseInt(separarData(data)[0]));
         setMes(Integer.parseInt(separarData(data)[1]) - 1);
         setAno(Integer.parseInt(separarData(data)[2]));
 
+        //Obtém o dia da semana relacionado à data enviada
         Date d = new Date();
         Calendar c = new GregorianCalendar();
         String nome = "";
@@ -186,6 +195,7 @@ public class MelhorCanil {
 
         int dia = c.get(c.DAY_OF_WEEK);
 
+        //Renomeia o dia da semana
         switch (dia) {
             case Calendar.MONDAY:
                 nome = "Segunda";
