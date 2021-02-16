@@ -33,19 +33,15 @@ public class MelhorCanil {
     /*Entrada do programa:*/
     //<data> <quantidade de cães pequenos> <quantidade cães grandes>
     //Exemplo: 03/08/2018 3 5
+    
     public static void main(String[] args) {
         // TODO code application logic here
-        Scanner teclado = new Scanner(System.in);
-        String data, dia_semana, completo;
+        String data, dia_semana;
         int pequenos, grandes;
-
-        System.out.println("Digite a data do banho (dd/mm/yyyy), a quantidade de cães pequenos e a quantidade de cães grandes. \nExemplo: 03/08/2018 3 5\n");
-        completo = teclado.nextLine();
-
-        //Separa todas as informações da resposta (data, qtd de cães pequenos e de grandes)
+        
         String partes[] = new String[3];
-
-        partes = completo.split(" ");
+        
+        partes = pegarDados();
 
         data = partes[0];
         pequenos = Integer.parseInt(partes[1]);
@@ -58,8 +54,22 @@ public class MelhorCanil {
         ChowChawgas chowChawgas = new ChowChawgas(VerificaDia.diaSemana, grandes, pequenos);
 
         comparar(meuCaninoFeliz, vaiRex, chowChawgas);
-        //System.out.println("Melhor canil: " + comparar(meuCanino, rex, chow));
 
+    }
+    
+    public static String[] pegarDados(){
+        Scanner teclado = new Scanner(System.in);
+        String completo;
+
+        System.out.println("Digite a data do banho (dd/mm/yyyy), a quantidade de cães pequenos e a quantidade de cães grandes. \nExemplo: 03/08/2018 3 5\n");
+        completo = teclado.nextLine();
+        System.out.println("");
+        //Separa todas as informações da resposta (data, qtd de cães pequenos e de grandes)
+        String partes[] = new String[3];
+
+        partes = completo.split(" ");
+        
+        return partes;
     }
 
     public static String comparar(MeuCaninoFeliz meuCaninoFeliz, VaiRex vaiRex, ChowChawgas chowChawgas) {
